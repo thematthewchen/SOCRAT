@@ -20,23 +20,30 @@ module.exports = class StatsPilot extends BaseService
     @alpha = 0.05
     @success =20
     @pilotRiskExceedMax = 1;
-    @pilotDFMax = 80;
+    @pilotDFMax = 100;
     @pilotPercentUnderMax = 100;
     @compAgents=[]
     @size = 100
     @percentUnder = 20;
     @riskExceed = 0.1;
-    @df = 0;
+    @df = 80;
     @parameter =
       p: @percentUnder
       r: @riskExceed
       d: @df
+<<<<<<< HEAD
       a: @alpha
       s: @success
       rMax: @pilotRiskExceedMax
       dfMax: @pilotDFMax
       pMax: @pilotPercentUnderMax
       t: @size
+=======
+      rMax: @pilotRiskExceedMax
+      dfMax: @pilotDFMax
+      pMax: @pilotPercentUnderMax
+    @update('pctUnder')
+>>>>>>> cdb4a1845ab7049e355b5156e7ba968a6388a309
 
   #TODO for data driven model
   saveData: (data) ->
@@ -56,13 +63,16 @@ module.exports = class StatsPilot extends BaseService
       p: @percentUnder
       r: @riskExceed
       d: @df
+      rMax: @pilotRiskExceedMax
+      dfMax: @pilotDFMax
+      pMax: @pilotPercentUnderMax
     return @parameter
 
   setParams: (newParams) ->
     @percentUnder = newParams.p
     @riskExceed = newParams.r
     @df = newParams.d
-    @update()
+    @update(newParams.tar)
     return
 
   checkRange: () ->
@@ -72,19 +82,19 @@ module.exports = class StatsPilot extends BaseService
 
   setAlpha: (alphaIn) ->
     @alpha = alphaIn
-    @update()
+    @update('pctUnder')
     return
 
-  update: () ->
+  update: (tar) ->
     input =
-      p: @percentUnder
-      r: @riskExceed
-      d: @df
+      tar: tar
+      pctUnder: @percentUnder
+      risk: @riskExceed
+      df: @df
     params = @powerCalc.pilot_handle(input)
-      # TODO: update everything
-    @parameter.p = params.p
-    @parameter.r = params.r
-    @parameter.d = params.d
+    @percentUnder = params.pctUnder
+    @riskExceed = params.risk
+    @df = params.df
     @checkRange()
     return
 
