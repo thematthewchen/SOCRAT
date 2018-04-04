@@ -368,17 +368,6 @@ module.exports = class StatsMainCtrl extends BaseCtrl
 				@$scope.$apply()
 		)
 
-		#enable or disable slider?
-		if @deployed is true
-			for sl in sliders
-				sl.slider("disable")
-				sl.find('.ui-slider-handle').hide()
-		else
-			for sl in sliders
-				sl.slider("enable")
-				sl.find('.ui-slider-handle').show()
-		return
-
 	PilotPress: (evt) ->
 		key = evt.which or evt.keyCode
 		if key is 13

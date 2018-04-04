@@ -31,6 +31,12 @@ module.exports = class StatsPilot extends BaseService
       p: @percentUnder
       r: @riskExceed
       d: @df
+      a: @alpha
+      s: @success
+      rMax: @pilotRiskExceedMax
+      dfMax: @pilotDFMax
+      pMax: @pilotPercentUnderMax
+      t: @size
 
   #TODO for data driven model
   saveData: (data) ->
